@@ -19,16 +19,18 @@ class GenerateThumborUrlHandler(tornado.web.RequestHandler):
 
     def get(self, *args, **kwargs):
         try:
-            arguments = self.extract_arguments()
-            params = self.build_crypto_params(arguments)
             self.set_header('Content-Type', 'text/plain')
-            self.write(self.settings['thumbor_server_url'] + self.generate_url(
-                params))
+            self.write(self.thumbor_complete_url())
         except (ThumborUrlException, ValueError, KeyError) as e:
             self.set_status(HTTP_BAD_REQUEST)
             logging.warning(e.message)
             self.write(e.message)
         self.flush()
+
+    def thumbor_complete_url(self):
+        arguments = self.extract_arguments()
+        params = self.build_crypto_params(arguments)
+        return self.settings['thumbor_server_url'] + self.generate_url(params)
 
     def extract_arguments(self):
         accepted_arguments = [
