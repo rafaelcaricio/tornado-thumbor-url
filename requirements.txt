@@ -2,5 +2,5 @@ libthumbor==0.6.1
 nose==1.2.1
 pycrypto==2.4.1
 pycurl==7.19.0
-tornado==2.1.1
+tornado==6.3.3
 coverage==3.5.3
